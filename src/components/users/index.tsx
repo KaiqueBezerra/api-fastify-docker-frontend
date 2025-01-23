@@ -33,7 +33,10 @@ export function Users() {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Usuários cadastrados</h2>
+      <h2 className={styles.title}>Usuários</h2>
+      {data?.filter((user) => user.email !== email).length === 0 && (
+        <p className={styles.empty}>Nenhum post criado</p>
+      )}
       <div className={styles.users}>
         {data
           ?.filter((user) => user.email !== email)

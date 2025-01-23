@@ -48,12 +48,8 @@ export function Posts({ email }: { email?: string }) {
 
   return (
     <div className={styles.container}>
-      {data?.length === 0 ? (
-        <p className={styles.empty}>Nenhum post criado</p>
-      ) : (
-        <h2 className={styles.title}>{email ? "Posts" : "Meus Posts"}</h2>
-      )}
-
+      <h2 className={styles.title}>{email ? "Posts" : "Meus Posts"}</h2>
+      {data?.length === 0 && <p className={styles.empty}>Nenhum post criado</p>}
       {data?.map((post) => (
         <Post post={post} key={post.id} />
       ))}
