@@ -5,7 +5,7 @@ import styles from "./index.module.css";
 export function User({ user }: { user: Users }) {
   return (
     <Link to={`/perfil/${user.email}`} className={styles.user} key={user.id}>
-      <p>{user.email}</p>
+      <p>{user.name}</p>
     </Link>
   );
 }
