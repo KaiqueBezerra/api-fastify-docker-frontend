@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  --color-1: #f4f6f8;
+  --color-2: #72a8f8;
+  --color-3: #ccc;
+  --color-4: #f0f0f0;
+  --color-5: rgb(255, 0, 0);
+}
+
+/* Scroll */
+
+/* Estilo geral da barra de rolagem */
+::-webkit-scrollbar {
+  width: 10px; /* Largura */
+  height: 10px; /* Altura em elementos horizontais */
+}
+
+/* Cor de fundo da barra de rolagem */
+::-webkit-scrollbar-track {
+  background: var(--color-4); /* Cinza claro */
+  border-radius: 5px;
+}
+
+/* Cor e estilo do controle deslizante */
+::-webkit-scrollbar-thumb {
+  background: var(--color-3); /* Cinza */
+  border-radius: 5px;
+}
+
+/* Cor do controle ao passar o mouse */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-3); /* Cinza escuro */
+}

@@ -1,0 +1,29 @@
+import { BrowserRouter, Route, Routes } from "react-router";
+import { Register } from "./pages/register";
+import { Index } from "./pages";
+import { Login } from "./pages/login";
+import ProtectedRoute from "./helper/protected";
+import "./App.css";
+import { Profile } from "./pages/profile";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Index />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Register />} />
+        <Route path="/perfil/:email" element={<Profile />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
