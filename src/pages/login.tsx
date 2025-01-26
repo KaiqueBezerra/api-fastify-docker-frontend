@@ -3,18 +3,19 @@ import { Link, useNavigate } from "react-router";
 import { api } from "../services/api";
 import styles from "./login.module.css";
 import { IconArrowRight } from "@tabler/icons-react";
+import { useData } from "../useContext";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login, setLogin, autoLogin } = useData();
 
   useEffect(() => {
-    const email = localStorage.getItem("email");
-    if (email) {
+    if (login === true) {
       navigate("/");
     }
-  }, [navigate]);
+  }, [login, navigate]);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -29,6 +30,8 @@ export function Login() {
 
       if (email) {
         localStorage.setItem("email", email);
+        setLogin(true);
+        autoLogin();
         navigate("/");
       } else {
         setEmail("Digite um email válido");

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { User } from "../user";
 import { api } from "../../services/api";
 import styles from "./index.module.css";
+import { useData } from "../../useContext";
 
 export interface Users {
   id: string;
@@ -13,7 +14,7 @@ export interface Users {
 
 export function Users() {
   const [data, setData] = useState<Users[] | null>(null);
-  const email = localStorage.getItem("email");
+  const { user } = useData();
 
   useEffect(() => {
     async function fetchUsers() {
@@ -34,12 +35,12 @@ export function Users() {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Usuários</h2>
-      {data?.filter((user) => user.email !== email).length === 0 && (
-        <p className={styles.empty}>Nenhum post criado</p>
+      {data?.filter((users) => users.email !== user?.email).length === 0 && (
+        <p className={styles.empty}>Nenhum usuário cadastrado</p>
       )}
       <div className={styles.users}>
         {data
-          ?.filter((user) => user.email !== email)
+          ?.filter((users) => users.email !== user?.email)
           .map((user) => (
             <User user={user} key={user.id} />
           ))}

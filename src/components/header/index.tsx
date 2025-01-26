@@ -1,38 +1,43 @@
 import { IconDots, IconPencil } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { PostModal } from "../postModal/index";
-import styles from "./index.module.css";
-import { api } from "../../services/api";
 import { UserModal } from "../userModal";
+import { useData } from "../../useContext";
+import { api } from "../../services/api";
+import styles from "./index.module.css";
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState(false);
-  const [post, setPost] = useState(false);
+  const [userModal, setUserModal] = useState(false);
+  const [postModal, setPostModal] = useState(false);
   const [name, setName] = useState("");
-  const email = localStorage.getItem("email");
+  const { user } = useData();
 
   useEffect(() => {
     async function fetchUser() {
-      try {
-        const controller = new AbortController();
-        const signal = controller.signal;
+      if (user) {
+        try {
+          const controller = new AbortController();
+          const signal = controller.signal;
 
-        const { data } = await api.get(`/users/${email}`, { signal: signal });
-        setName(data.name);
-      } catch (error) {
-        console.log(error);
+          const { data } = await api.get(`/users/${user.email}`, {
+            signal: signal,
+          });
+          setName(data.name);
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
     fetchUser();
-  }, [email]);
+  }, [user]);
 
   function onClosePost() {
-    setPost(!post);
+    setPostModal(!postModal);
   }
 
   function onCloseUser() {
-    setUser(!user);
+    setUserModal(!userModal);
   }
 
   function logout() {
@@ -63,8 +68,8 @@ export function Header() {
           </div>
         )}
 
-        {user && <UserModal onClose={onCloseUser} name={name} />}
-        {post && <PostModal onClose={onClosePost} />}
+        {userModal && <UserModal onClose={onCloseUser} name={name} />}
+        {postModal && <PostModal onClose={onClosePost} />}
       </header>
     </div>
   );

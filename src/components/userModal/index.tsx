@@ -2,6 +2,7 @@ import { useState } from "react";
 import { IconX } from "@tabler/icons-react";
 import { api } from "../../services/api";
 import styles from "./index.module.css";
+import { useData } from "../../useContext";
 
 export function UserModal({
   onClose,
@@ -12,6 +13,7 @@ export function UserModal({
 }) {
   const [newName, setNewName] = useState(name);
   const [loading, setLoading] = useState(false);
+  const { user } = useData();
 
   const handleOverlayClick = () => {
     onClose();
@@ -27,7 +29,6 @@ export function UserModal({
     setLoading(true);
 
     try {
-      const email = localStorage.getItem("email");
       const controller = new AbortController();
       const signal = controller.signal;
 
@@ -36,7 +37,7 @@ export function UserModal({
         {
           name: newName,
         },
-        { headers: { email: email }, signal: signal }
+        { headers: { email: user?.email }, signal: signal }
       );
 
       window.location.reload();

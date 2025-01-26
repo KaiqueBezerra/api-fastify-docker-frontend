@@ -1,29 +1,15 @@
-import { useEffect, useState } from "react";
 import { IconPencil, IconX } from "@tabler/icons-react";
 import { PostModalEdit } from "../postModalEdit";
+import { useState } from "react";
+import { useData } from "../../useContext";
 import { Posts } from "../posts";
 import { api } from "../../services/api";
 import styles from "./index.module.css";
 
 export function Post({ post }: { post: Posts }) {
-  const [userId, setUserId] = useState("");
+  const { user } = useData();
   const [modal, setModal] = useState(false);
   const email = localStorage.getItem("email");
-
-  useEffect(() => {
-    async function fetchUser() {
-      try {
-        const controller = new AbortController();
-        const signal = controller.signal;
-
-        const { data } = await api.get(`/users/${email}`, { signal: signal });
-        setUserId(data.id);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchUser();
-  }, [email]);
 
   async function handleDelete(postId: string) {
     const confirm = window.confirm("Tem certeza que deseja excluir?");
@@ -73,7 +59,7 @@ export function Post({ post }: { post: Posts }) {
     <div key={post.id} className={styles.post}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h3>{post.title}</h3> {post.author && <span> {post.author.name}</span>}{" "}
-        {userId === post.authorId && (
+        {user?.id === post.authorId && (
           <div>
             <IconPencil className={styles.pencil} onClick={onClose} />
             <IconX className={styles.x} onClick={() => handleDelete(post.id)} />

@@ -1,9 +1,15 @@
 import { Navigate } from "react-router";
+import { useData } from "../useContext";
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-  const email = localStorage.getItem("email");
+  const { login } = useData();
 
-  if (email) {
+  if (login === null) {
+    // Mostra um loader ou retorna vazio até verificar o estado de login
+    return <div>Carregando...</div>;
+  }
+
+  if (login === true) {
     return children;
   } else {
     return <Navigate to="/login" />;

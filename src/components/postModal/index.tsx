@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useData } from "../../useContext";
 import { IconX } from "@tabler/icons-react";
 import { api } from "../../services/api";
 import styles from "./index.module.css";
@@ -7,6 +8,7 @@ export function PostModal({ onClose }: { onClose: VoidFunction }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [loading, setLoading] = useState(false);
+  const { user } = useData();
 
   const handleOverlayClick = () => {
     onClose();
@@ -22,7 +24,6 @@ export function PostModal({ onClose }: { onClose: VoidFunction }) {
     setLoading(true);
 
     try {
-      const email = localStorage.getItem("email");
       const controller = new AbortController();
       const signal = controller.signal;
 
@@ -32,7 +33,7 @@ export function PostModal({ onClose }: { onClose: VoidFunction }) {
           title,
           body,
         },
-        { headers: { email: email }, signal: signal }
+        { headers: { email: user?.email }, signal: signal }
       );
 
       window.location.reload();

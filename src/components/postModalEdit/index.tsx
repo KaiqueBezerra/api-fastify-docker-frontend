@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useData } from "../../useContext";
 import { IconX } from "@tabler/icons-react";
 import { api } from "../../services/api";
 import styles from "./index.module.css";
@@ -17,6 +18,7 @@ export function PostModalEdit({
   const [newTitle, setNewTitle] = useState(title);
   const [newBody, setNewBody] = useState(body);
   const [loading, setLoading] = useState(false);
+  const { user } = useData();
 
   const handleOverlayClick = () => {
     onClose();
@@ -32,7 +34,6 @@ export function PostModalEdit({
     setLoading(true);
 
     try {
-      const email = localStorage.getItem("email");
       const controller = new AbortController();
       const signal = controller.signal;
 
@@ -42,7 +43,7 @@ export function PostModalEdit({
           title: newTitle,
           body: newBody,
         },
-        { headers: { email: email }, signal: signal }
+        { headers: { email: user?.email }, signal: signal }
       );
 
       window.location.reload();

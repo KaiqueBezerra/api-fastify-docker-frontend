@@ -6,22 +6,21 @@ import { Posts } from "../components/posts";
 
 export function Profile() {
   const [name, setName] = useState("");
-  const email = useParams().email;
-
+  const id = useParams().id;
   useEffect(() => {
     async function fetchUser() {
       try {
         const controller = new AbortController();
         const signal = controller.signal;
 
-        const { data } = await api.get(`/users/${email}`, { signal: signal });
+        const { data } = await api.get(`/users/user/${id}`, { signal: signal });
         setName(data.name);
       } catch (error) {
         console.log(error);
       }
     }
     fetchUser();
-  }, [email]);
+  }, [id]);
 
   return (
     <div className={styles.principal}>
@@ -29,7 +28,7 @@ export function Profile() {
         <h1 className={styles.name}>{name}</h1>
       </div>
 
-      {email && <Posts email={email} />}
+      {id && <Posts id={id} />}
     </div>
   );
 }

@@ -5,23 +5,26 @@ import { Login } from "./pages/login";
 import ProtectedRoute from "./helper/protected";
 import "./App.css";
 import { Profile } from "./pages/profile";
+import { ContextProvider } from "./useContext";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Index />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/login" element={<Login />} />
-        <Route path="/registro" element={<Register />} />
-        <Route path="/perfil/:email" element={<Profile />} />
-      </Routes>
+      <ContextProvider>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Index />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Register />} />
+          <Route path="/perfil/:id" element={<Profile />} />
+        </Routes>
+      </ContextProvider>
     </BrowserRouter>
   );
 }
